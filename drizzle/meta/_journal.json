@@ -1,0 +1,118 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1772723395363,
+      "tag": "0000_awesome_rick_jones",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1772900000000,
+      "tag": "0001_subjective_market_refactor",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1773100000000,
+      "tag": "0002_maker_api",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1773300000000,
+      "tag": "0003_add_opinion_basis",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1773400000000,
+      "tag": "0004_true_magneto",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1773224049503,
+      "tag": "0005_heavy_ironclad",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1773500000000,
+      "tag": "0006_agent_profile_metadata",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1773599318966,
+      "tag": "0007_unique_zarda",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1773700000000,
+      "tag": "0008_answer_type_rename",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1773800000000,
+      "tag": "0009_surface_topic_analysis",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1773900000000,
+      "tag": "0010_research_funnels",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1774000000000,
+      "tag": "0011_funnel_analysis",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "6",
+      "when": 1774100000000,
+      "tag": "0012_daily_sessions",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "6",
+      "when": 1778284800000,
+      "tag": "0014_consent_and_review",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "6",
+      "when": 1778371200000,
+      "tag": "0015_consent_seed_and_pending_deletions",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "6",
+      "when": 1779753600000,
+      "tag": "0016_funnel_scheduling",
+      "breakpoints": true
+    }
+  ]
+}

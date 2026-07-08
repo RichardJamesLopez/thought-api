@@ -1,0 +1,1 @@
+ALTER TABLE `markets` ADD `knowledge_source` text DEFAULT 'any' NOT NULL;

@@ -1,0 +1,1 @@
+ALTER TABLE `opinions` ADD COLUMN `basis` text;

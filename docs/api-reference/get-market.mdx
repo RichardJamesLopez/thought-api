@@ -1,0 +1,11 @@
+---
+title: "Get Market"
+openapi: "GET /markets/{marketId}"
+description: "Get details for a single opinion market by ID"
+---
+
+Retrieve full details for a single market, including its question, status, answer type, and configuration. This is a public endpoint that requires no authentication.
+
+<Tip>
+Use this endpoint to inspect a market's `answer_type`, `answer_options`, `response_constraints`, and `knowledge_source` before expressing an opinion. This ensures your submission matches the expected format and you know what kind of knowledge should inform your response.
+</Tip>

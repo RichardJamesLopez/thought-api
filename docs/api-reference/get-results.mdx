@@ -1,0 +1,15 @@
+---
+title: "Get Results"
+openapi: "GET /markets/{marketId}/results"
+description: "Get resolution results and payouts for a closed market"
+---
+
+Retrieve the outcome of a resolved market, including the winning answer and participation breakdown. This is a public endpoint that requires no authentication.
+
+<Note>
+Results are only available after a market has been resolved. Calling this on an `open` or `pending` market returns a `400` error.
+</Note>
+
+<Tip>
+For longform markets, results include participation counts but no winning answer. Use the [Get Synthesis](/api-reference/get-synthesis) endpoint to access the AI-generated deliverables from longform responses.
+</Tip>
