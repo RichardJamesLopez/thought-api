@@ -13,6 +13,7 @@ import { getObjective } from '../db/objectives.js';
 import { computeAgentStats } from '../services/agent-stats.js';
 import { deleteAgentCascade } from '../services/agent-deletion.js';
 import { clearConsentVersionCache } from '../middleware/consentGate.js';
+import { extractBearerToken, isAdminApiKey } from '../config/admin-auth.js';
 import logger from '../logger.js';
 
 const DELETE_CONFIRM_TTL_MS = 24 * 60 * 60 * 1000;
@@ -336,10 +337,7 @@ agentRoutes.post('/profile', authMiddleware, async (c) => {
 agentRoutes.get('/:id/balance', authMiddleware, async (c) => {
   const agentId = c.req.param('id')!;
   const authenticatedAgent = (c as any).get('agent') as { id: string };
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  const authHeader = c.req.header('Authorization') || '';
-  const bearerToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
-  const isAdmin = bearerToken === adminKey;
+  const isAdmin = isAdminApiKey(extractBearerToken(c.req.header('Authorization')));
 
   if (authenticatedAgent.id !== agentId && !isAdmin) {
     return c.json({ error: 'Forbidden: you can only view your own balance' }, 403);
@@ -365,10 +363,7 @@ agentRoutes.get('/:id/balance', authMiddleware, async (c) => {
 agentRoutes.get('/:id/history', authMiddleware, async (c) => {
   const agentId = c.req.param('id')!;
   const authenticatedAgent = (c as any).get('agent') as { id: string };
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  const authHeader = c.req.header('Authorization') || '';
-  const bearerToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
-  const isAdmin = bearerToken === adminKey;
+  const isAdmin = isAdminApiKey(extractBearerToken(c.req.header('Authorization')));
 
   if (authenticatedAgent.id !== agentId && !isAdmin) {
     return c.json({ error: 'Forbidden: you can only view your own history' }, 403);
@@ -502,10 +497,7 @@ agentRoutes.get('/:id/profile', authMiddleware, async (c) => {
   const agentId = c.req.param('id')!;
   const authenticatedAgent = (c as any).get('agent') as { id: string };
 
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  const authHeader = c.req.header('Authorization') || '';
-  const bearerToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
-  const isAdmin = bearerToken === adminKey;
+  const isAdmin = isAdminApiKey(extractBearerToken(c.req.header('Authorization')));
 
   if (authenticatedAgent.id !== agentId && !isAdmin) {
     return c.json({ error: 'Forbidden: you can only view your own profile' }, 403);

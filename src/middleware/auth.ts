@@ -2,18 +2,17 @@ import { Context, Next } from 'hono';
 import bcrypt from 'bcryptjs';
 import { db } from '../db/index.js';
 import { agents } from '../db/schema.js';
+import { extractBearerToken, isAdminApiKey } from '../config/admin-auth.js';
 
 export const authMiddleware = async (c: Context, next: Next) => {
   const authHeader = c.req.header('Authorization');
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  const apiKey = extractBearerToken(authHeader);
+  if (!apiKey) {
     return c.json({ error: 'Unauthorized' }, 401);
   }
 
-  const apiKey = authHeader.slice(7);
-
   // Allow admin API key to pass through (handlers check isAdmin separately)
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (apiKey === adminKey) {
+  if (isAdminApiKey(apiKey)) {
     c.set('agent', { id: '__admin__' });
     return next();
   }
@@ -39,14 +38,12 @@ export const authMiddleware = async (c: Context, next: Next) => {
 
 export const adminAuthMiddleware = async (c: Context, next: Next) => {
   const authHeader = c.req.header('Authorization');
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  const apiKey = extractBearerToken(authHeader);
+  if (!apiKey) {
     return c.json({ error: 'Unauthorized' }, 401);
   }
 
-  const apiKey = authHeader.slice(7);
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-
-  if (apiKey !== adminKey) {
+  if (!isAdminApiKey(apiKey)) {
     return c.json({ error: 'Forbidden' }, 403);
   }
 

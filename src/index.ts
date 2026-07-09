@@ -1,10 +1,12 @@
 // Boot-time secrets check. Fail loudly in production rather than silently
-// rainbow-tabling the consent-record audit log with an unsalted hash. Runs
-// before db init / migrations so Railway marks the deploy failed and surfaces
-// the missing env var immediately.
+// accepting weak local defaults or rainbow-tabling the consent-record audit log
+// with an unsalted hash.
+import { validateAdminApiKeyConfiguration } from './config/admin-auth.js';
+
 if (process.env.NODE_ENV === 'production' && !process.env.IP_HASH_SALT) {
   throw new Error('IP_HASH_SALT environment variable is required in production');
 }
+validateAdminApiKeyConfiguration();
 
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';

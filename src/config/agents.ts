@@ -2,6 +2,7 @@
  * Single source of truth for agent configuration.
  * Personas, objectives, and runtime settings all live here.
  */
+import { getAdminApiKey } from './admin-auth.js';
 
 // ── Personas ──
 
@@ -48,7 +49,7 @@ export const OBJECTIVES: string[] = [OBJECTIVE_A, OBJECTIVE_B, OBJECTIVE_C];
 
 export const runtimeConfig = {
   BASE_URL: process.env.E2E_BASE_URL || `http://localhost:${process.env.THOUGHT_PORT || '3000'}`,
-  ADMIN_KEY: process.env.ADMIN_API_KEY || 'local-admin-key',
+  ADMIN_KEY: getAdminApiKey(),
   AGENT_COUNT: parseInt(process.env.LOOP_AGENT_COUNT || '30'),
   TTL_HOURS: parseInt(process.env.LOOP_TTL_HOURS || '24'),
   LOOP_INTERVAL_MS: parseInt(process.env.LOOP_INTERVAL_MS || '15000'),
