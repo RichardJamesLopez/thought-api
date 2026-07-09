@@ -1,6 +1,7 @@
-import { Hono } from 'hono';
+import { Hono, type Context } from 'hono';
 import { getCookie, setCookie } from 'hono/cookie';
 import { adminAuthMiddleware } from '../middleware/auth.js';
+import { isAdminApiKey } from '../config/admin-auth.js';
 import { renderDashboard, renderLoginPage, renderMarketDetail, renderFunnelDetail, renderSurfaceTopicsPage, renderMarketsPage } from '../views/dashboard.js';
 import { renderMarketCreator } from '../views/market-creator.js';
 import { renderSchedulePage } from '../views/schedule.js';
@@ -53,12 +54,15 @@ import logger from '../logger.js';
 
 export const analyticsRoutes = new Hono();
 
+function getAdminSessionKey(c: Context): string | undefined {
+  const key = getCookie(c, 'thought_admin_session');
+  return isAdminApiKey(key) ? key : undefined;
+}
+
 // Dashboard HTML page — cookie-based auth for browser access
 analyticsRoutes.get('/dashboard', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-
-  if (!key || key !== adminKey) {
+  const key = getAdminSessionKey(c);
+  if (!key) {
     return c.html(renderLoginPage());
   }
 
@@ -69,9 +73,8 @@ analyticsRoutes.get('/dashboard', (c) => {
 analyticsRoutes.post('/dashboard', async (c) => {
   const body = await c.req.parseBody();
   const key = typeof body['key'] === 'string' ? body['key'] : '';
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
 
-  if (!key || key !== adminKey) {
+  if (!isAdminApiKey(key)) {
     return c.html(renderLoginPage('Invalid admin key'), 401);
   }
 
@@ -87,81 +90,71 @@ analyticsRoutes.post('/dashboard', async (c) => {
 
 // Longform PII review queue (admin)
 analyticsRoutes.get('/longform-queue', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderLongformQueuePage(key));
 });
 
 // Surface-Topics standalone page — cookie-based auth
 analyticsRoutes.get('/surface-topics', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderSurfaceTopicsPage(key));
 });
 
 // Studies tab — chooser between Research Funnels and Surface Topics
 analyticsRoutes.get('/studies', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderStudiesLandingPage(key));
 });
 
 // Research Funnels analytics overview (with Manage Funnels button)
 analyticsRoutes.get('/funnels', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderFunnelsOverviewPage(key));
 });
 
 // Funnel CRUD list page — admin-style
 analyticsRoutes.get('/funnels/manage', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderFunnelsManagePage(key));
 });
 
 // Funnel creator form
 analyticsRoutes.get('/funnels/manage/new', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderFunnelCreator(key));
 });
 
 // Funnel editor form
 analyticsRoutes.get('/funnels/manage/:id', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderFunnelEditor(key, c.req.param('id')));
 });
 
 // Surface Topic creator page — cookie-based auth
 analyticsRoutes.get('/surface-topics/new', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderTopicCreator(key));
 });
 
 // Surface Topic detail/management page — cookie-based auth
 analyticsRoutes.get('/surface-topics/:id', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderTopicDetail(key, c.req.param('id')));
 });
 
 // Agent Directory page — cookie-based auth
 analyticsRoutes.get('/directory', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderDirectoryPage(key));
 });
 
@@ -172,25 +165,22 @@ analyticsRoutes.get('/leaderboard', (c) => {
 
 // Agent Detail page — cookie-based auth
 analyticsRoutes.get('/agent/:id', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderAgentDetailPage(key, c.req.param('id')));
 });
 
 // Pool Analyzer page — cookie-based auth
 analyticsRoutes.get('/pool-analyzer', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderPoolAnalyzerPage(key));
 });
 
 // Cohort Analyzer page — cookie-based auth
 analyticsRoutes.get('/cohort-analyzer', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderCohortAnalyzerPage(key));
 });
 
@@ -318,18 +308,15 @@ analyticsRoutes.post('/cohort-analyzer/export', async (c) => {
 
 // Markets standalone page — cookie-based auth
 analyticsRoutes.get('/markets', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-  if (!key || key !== adminKey) return c.redirect('/admin/dashboard', 303);
+  const key = getAdminSessionKey(c);
+  if (!key) return c.redirect('/admin/dashboard', 303);
   return c.html(renderMarketsPage(key));
 });
 
 // Market creator HTML page — cookie-based auth
 analyticsRoutes.get('/markets/new', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-
-  if (!key || key !== adminKey) {
+  const key = getAdminSessionKey(c);
+  if (!key) {
     return c.redirect('/admin/dashboard', 303);
   }
 
@@ -338,10 +325,8 @@ analyticsRoutes.get('/markets/new', (c) => {
 
 // Schedule planning page — cookie-based auth
 analyticsRoutes.get('/schedule', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-
-  if (!key || key !== adminKey) {
+  const key = getAdminSessionKey(c);
+  if (!key) {
     return c.redirect('/admin/dashboard', 303);
   }
 
@@ -350,10 +335,8 @@ analyticsRoutes.get('/schedule', (c) => {
 
 // Funnel detail HTML page — cookie-based auth
 analyticsRoutes.get('/funnel/:funnelId', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-
-  if (!key || key !== adminKey) {
+  const key = getAdminSessionKey(c);
+  if (!key) {
     return c.redirect('/admin/dashboard', 303);
   }
 
@@ -362,10 +345,8 @@ analyticsRoutes.get('/funnel/:funnelId', (c) => {
 
 // Classification Settings — cookie-based auth
 analyticsRoutes.get('/settings/classifications', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-
-  if (!key || key !== adminKey) {
+  const key = getAdminSessionKey(c);
+  if (!key) {
     return c.redirect('/admin/dashboard', 303);
   }
 
@@ -374,10 +355,8 @@ analyticsRoutes.get('/settings/classifications', (c) => {
 
 // Market detail HTML page — cookie-based auth
 analyticsRoutes.get('/market/:id', (c) => {
-  const key = getCookie(c, 'thought_admin_session');
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
-
-  if (!key || key !== adminKey) {
+  const key = getAdminSessionKey(c);
+  if (!key) {
     return c.redirect('/admin/dashboard', 303);
   }
 

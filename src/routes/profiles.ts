@@ -7,6 +7,7 @@ import { profileQuestions } from '../db/profile-questions.js';
 import bcrypt from 'bcryptjs';
 import { computeAgentStats } from '../services/agent-stats.js';
 import { renderAgentProfile } from '../views/agent-profile.js';
+import { extractBearerToken, isAdminApiKey } from '../config/admin-auth.js';
 
 export const profilePageRoutes = new Hono();
 
@@ -14,23 +15,24 @@ export const profilePageRoutes = new Hono();
 // Supports: Bearer token (API) OR thought_admin_session cookie (browser)
 profilePageRoutes.get('/:handle', async (c) => {
   const handle = c.req.param('handle')!;
-  const adminKey = process.env.ADMIN_API_KEY || 'local-admin-key';
 
   // Determine auth: Bearer token or admin session cookie
   let bearerToken: string | null = null;
   let isAdmin = false;
+  let adminPageKey: string | undefined;
 
-  const authHeader = c.req.header('Authorization') || '';
-  if (authHeader.startsWith('Bearer ')) {
-    bearerToken = authHeader.slice(7);
-    isAdmin = bearerToken === adminKey;
+  bearerToken = extractBearerToken(c.req.header('Authorization'));
+  if (bearerToken && isAdminApiKey(bearerToken)) {
+    isAdmin = true;
+    adminPageKey = bearerToken;
   }
 
   // Fall back to admin session cookie (for browser access from dashboard)
   if (!bearerToken) {
     const sessionCookie = getCookie(c, 'thought_admin_session');
-    if (sessionCookie && sessionCookie === adminKey) {
+    if (isAdminApiKey(sessionCookie)) {
       isAdmin = true;
+      adminPageKey = sessionCookie;
     }
   }
 
@@ -80,7 +82,7 @@ profilePageRoutes.get('/:handle', async (c) => {
   return c.html(renderAgentProfile({
     ...stats,
     is_owner: isOwner,
-    api_key: isOwner ? bearerToken! : isAdmin ? adminKey : undefined,
+    api_key: isOwner ? bearerToken! : adminPageKey,
     genesis_answers: genesisAnswers,
   }));
 });

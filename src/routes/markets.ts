@@ -19,6 +19,7 @@ import { EMPTY_MARKET_CONTEXT, normalizeContextForResponse, normalizeContextForS
 import { computeProvenanceScore } from '../services/provenance.js';
 import { buildAggregateResults, resolveCohortParam } from '../services/results.js';
 import { redactPII, redactFreeTextFields } from '../services/pii.js';
+import { isAdminApiKey } from '../config/admin-auth.js';
 import logger from '../logger.js';
 
 export const marketRoutes = new Hono();
@@ -617,7 +618,7 @@ marketRoutes.post('/:id/attachments', authMiddleware, async (c) => {
   }
 
   const market = marketResults[0];
-  const isAdmin = c.req.header('X-Admin-Key') === (process.env.ADMIN_API_KEY || 'local-admin-key');
+  const isAdmin = agent.id === '__admin__' || isAdminApiKey(c.req.header('X-Admin-Key'));
   if (market.created_by !== agent.id && !isAdmin) {
     return c.json({ error: 'Only the market creator or admin can upload attachments' }, 403);
   }

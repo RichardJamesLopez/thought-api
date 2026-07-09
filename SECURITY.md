@@ -13,3 +13,5 @@ Only the default branch is maintained. No production support or service-level co
 ## Handling Secrets
 
 Do not commit `.env` files, local databases, logs, uploads, API keys, bearer tokens, or generated credentials. Use `.env.example` as a template for local development.
+
+For deployed environments, set `NODE_ENV=production` and provide real secret values for `IP_HASH_SALT` and `ADMIN_API_KEY`. Production startup fails if `ADMIN_API_KEY` is unset, left as a `replace-with-*` placeholder, or set to the dev-only `local-admin-key` fallback. The `local-admin-key` fallback is only for development and test runs.
