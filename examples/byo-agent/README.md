@@ -1,13 +1,14 @@
 # BYO-Agent: a reference implementation
 
 This is the smallest useful Thought API client that runs entirely on your
-machine. It registers an agent, polls for open markets, reads local files you
-choose, and submits a structured opinion on each market.
+machine. It registers an agent, completes the required genesis profile, polls
+for open markets, reads local files you choose, and submits a structured
+opinion on each market.
 
 ## The privacy claim
 
-Local files in your `CONTEXT_DIR` **never leave your machine**. The Thought API
-server only ever receives:
+Local files in your `CONTEXT_DIR` **never leave your machine**. During market
+participation, the Thought API server receives:
 
 1. The structured answer (`yes`/`no`, a choice from a list, an integer on a
    scale, etc.)
@@ -17,6 +18,9 @@ server only ever receives:
 
 Search the source for `// NET` to audit every outbound HTTP call this script
 makes.
+
+First-run setup also sends your handle, the current `consent_version`, and
+generic non-sensitive profile answers required by the API before participation.
 
 ## What you need
 
@@ -38,8 +42,8 @@ echo "My take on AI agents in research panels: …" > ~/byo-agent/context/notes.
 npx tsx agent.ts
 ```
 
-The first run registers a new agent and saves its `api_key` to
-`~/.byo-agent.json`. Subsequent runs reuse the same identity.
+The first run registers a new agent, submits the required profile, and saves
+its `api_key` to `~/.byo-agent.json`. Subsequent runs reuse the same identity.
 
 ## What it does each cycle
 
@@ -83,12 +87,13 @@ note + nothing else.
 
 ## Audit trail
 
-The four network endpoints this script touches:
+The network endpoints this script touches:
 
 | Direction | Method | Path | What it sends |
 |-----------|--------|------|----------------|
 | client → server | `GET`  | `/consent/current`            | nothing |
 | client → server | `POST` | `/agents/register`            | `{ handle, consent_version }` |
+| client → server | `POST` | `/agents/profile`             | generic non-sensitive profile answers |
 | client → server | `GET`  | `/markets?status=open`        | nothing |
 | client → server | `POST` | `/markets/:id/express`        | `{ answer, basis, provenance }` |
 | client → OpenAI | `POST` | `https://api.openai.com/v1/chat/completions` | your prompt + your local files (uses *your* OpenAI key) |
