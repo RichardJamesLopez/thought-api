@@ -1,7 +1,7 @@
-import { Hono, type Context } from 'hono';
-import { getCookie, setCookie } from 'hono/cookie';
+import { Hono } from 'hono';
 import { adminAuthMiddleware } from '../middleware/auth.js';
 import { isAdminApiKey } from '../config/admin-auth.js';
+import { hasValidAdminSession, setAdminSessionCookie } from '../middleware/admin-session.js';
 import { renderDashboard, renderLoginPage, renderMarketDetail, renderFunnelDetail, renderSurfaceTopicsPage, renderMarketsPage } from '../views/dashboard.js';
 import { renderMarketCreator } from '../views/market-creator.js';
 import { renderSchedulePage } from '../views/schedule.js';
@@ -54,19 +54,13 @@ import logger from '../logger.js';
 
 export const analyticsRoutes = new Hono();
 
-function getAdminSessionKey(c: Context): string | undefined {
-  const key = getCookie(c, 'thought_admin_session');
-  return isAdminApiKey(key) ? key : undefined;
-}
-
 // Dashboard HTML page — cookie-based auth for browser access
 analyticsRoutes.get('/dashboard', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) {
+  if (!hasValidAdminSession(c)) {
     return c.html(renderLoginPage());
   }
 
-  return c.html(renderDashboard(key));
+  return c.html(renderDashboard());
 });
 
 // POST login — sets cookie and redirects, key never appears in URL
@@ -78,84 +72,69 @@ analyticsRoutes.post('/dashboard', async (c) => {
     return c.html(renderLoginPage('Invalid admin key'), 401);
   }
 
-  setCookie(c, 'thought_admin_session', key, {
-    httpOnly: true,
-    sameSite: 'Strict',
-    maxAge: 28800, // 8 hours
-    path: '/',
-  });
+  setAdminSessionCookie(c);
 
   return c.redirect('/admin/dashboard', 303);
 });
 
 // Longform PII review queue (admin)
 analyticsRoutes.get('/longform-queue', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderLongformQueuePage(key));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderLongformQueuePage());
 });
 
 // Surface-Topics standalone page — cookie-based auth
 analyticsRoutes.get('/surface-topics', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderSurfaceTopicsPage(key));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderSurfaceTopicsPage());
 });
 
 // Studies tab — chooser between Research Funnels and Surface Topics
 analyticsRoutes.get('/studies', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderStudiesLandingPage(key));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderStudiesLandingPage());
 });
 
 // Research Funnels analytics overview (with Manage Funnels button)
 analyticsRoutes.get('/funnels', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderFunnelsOverviewPage(key));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderFunnelsOverviewPage());
 });
 
 // Funnel CRUD list page — admin-style
 analyticsRoutes.get('/funnels/manage', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderFunnelsManagePage(key));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderFunnelsManagePage());
 });
 
 // Funnel creator form
 analyticsRoutes.get('/funnels/manage/new', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderFunnelCreator(key));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderFunnelCreator());
 });
 
 // Funnel editor form
 analyticsRoutes.get('/funnels/manage/:id', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderFunnelEditor(key, c.req.param('id')));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderFunnelEditor(c.req.param('id')));
 });
 
 // Surface Topic creator page — cookie-based auth
 analyticsRoutes.get('/surface-topics/new', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderTopicCreator(key));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderTopicCreator());
 });
 
 // Surface Topic detail/management page — cookie-based auth
 analyticsRoutes.get('/surface-topics/:id', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderTopicDetail(key, c.req.param('id')));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderTopicDetail(c.req.param('id')));
 });
 
 // Agent Directory page — cookie-based auth
 analyticsRoutes.get('/directory', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderDirectoryPage(key));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderDirectoryPage());
 });
 
 // Redirect old leaderboard URL to directory
@@ -165,23 +144,20 @@ analyticsRoutes.get('/leaderboard', (c) => {
 
 // Agent Detail page — cookie-based auth
 analyticsRoutes.get('/agent/:id', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderAgentDetailPage(key, c.req.param('id')));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderAgentDetailPage(c.req.param('id')));
 });
 
 // Pool Analyzer page — cookie-based auth
 analyticsRoutes.get('/pool-analyzer', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderPoolAnalyzerPage(key));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderPoolAnalyzerPage());
 });
 
 // Cohort Analyzer page — cookie-based auth
 analyticsRoutes.get('/cohort-analyzer', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderCohortAnalyzerPage(key));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderCohortAnalyzerPage());
 });
 
 // ── Cohort Report endpoints (powering Cohort Analyzer's report features) ──
@@ -308,59 +284,53 @@ analyticsRoutes.post('/cohort-analyzer/export', async (c) => {
 
 // Markets standalone page — cookie-based auth
 analyticsRoutes.get('/markets', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) return c.redirect('/admin/dashboard', 303);
-  return c.html(renderMarketsPage(key));
+  if (!hasValidAdminSession(c)) return c.redirect('/admin/dashboard', 303);
+  return c.html(renderMarketsPage());
 });
 
 // Market creator HTML page — cookie-based auth
 analyticsRoutes.get('/markets/new', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) {
+  if (!hasValidAdminSession(c)) {
     return c.redirect('/admin/dashboard', 303);
   }
 
-  return c.html(renderMarketCreator(key));
+  return c.html(renderMarketCreator());
 });
 
 // Schedule planning page — cookie-based auth
 analyticsRoutes.get('/schedule', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) {
+  if (!hasValidAdminSession(c)) {
     return c.redirect('/admin/dashboard', 303);
   }
 
-  return c.html(renderSchedulePage(key));
+  return c.html(renderSchedulePage());
 });
 
 // Funnel detail HTML page — cookie-based auth
 analyticsRoutes.get('/funnel/:funnelId', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) {
+  if (!hasValidAdminSession(c)) {
     return c.redirect('/admin/dashboard', 303);
   }
 
-  return c.html(renderFunnelDetail(key, c.req.param('funnelId')));
+  return c.html(renderFunnelDetail(c.req.param('funnelId')));
 });
 
 // Classification Settings — cookie-based auth
 analyticsRoutes.get('/settings/classifications', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) {
+  if (!hasValidAdminSession(c)) {
     return c.redirect('/admin/dashboard', 303);
   }
 
-  return c.html(renderClassificationSettings(key));
+  return c.html(renderClassificationSettings());
 });
 
 // Market detail HTML page — cookie-based auth
 analyticsRoutes.get('/market/:id', (c) => {
-  const key = getAdminSessionKey(c);
-  if (!key) {
+  if (!hasValidAdminSession(c)) {
     return c.redirect('/admin/dashboard', 303);
   }
 
-  return c.html(renderMarketDetail(key, c.req.param('id')));
+  return c.html(renderMarketDetail(c.req.param('id')));
 });
 
 // JSON API endpoints — standard admin Bearer auth

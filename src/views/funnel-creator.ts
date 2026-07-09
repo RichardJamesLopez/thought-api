@@ -2,9 +2,7 @@ import { adminNavScript, renderAdminNav } from './admin-nav.js';
 import { themeToggleButton, themeScript } from './theme.js';
 import { funnelFormStyles, funnelFormFields, funnelFormScript } from './funnel-form.js';
 
-export function renderFunnelCreator(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-
+export function renderFunnelCreator(): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,9 +51,7 @@ export function renderFunnelCreator(apiKey: string): string {
 
   <script>
     ${themeScript}
-    ${adminNavScript}
-    var API_KEY = ${safeKey};
-    ${funnelFormScript}
+    ${adminNavScript}    ${funnelFormScript}
 
     async function submitFunnel() {
       var btn = document.getElementById('submit-btn');
@@ -77,7 +73,7 @@ export function renderFunnelCreator(apiKey: string): string {
       try {
         var res = await fetch('/admin/analytics/funnels-admin', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + API_KEY },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
         var data = await res.json();

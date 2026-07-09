@@ -1,8 +1,6 @@
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
 
-export function renderPoolAnalyzerPage(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-
+export function renderPoolAnalyzerPage(): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -284,9 +282,7 @@ export function renderPoolAnalyzerPage(apiKey: string): string {
     </div>
   </div>
 
-  <script>
-    var API_KEY = ${safeKey};
-    var headers = { 'Authorization': 'Bearer ' + API_KEY };
+  <script>    var headers = {}
     var styleChartInstance = null;
 
     function toggleNav() {
@@ -571,7 +567,7 @@ export function renderPoolAnalyzerPage(apiKey: string): string {
     async function loadThresholds() {
       try {
         var res = await fetch('/admin/analytics/thresholds', {
-          headers: { 'Authorization': 'Bearer ' + API_KEY }
+          headers: {}
         });
         var data = await res.json();
         renderGroupedThresholds(data.thresholds);
@@ -666,7 +662,7 @@ export function renderPoolAnalyzerPage(apiKey: string): string {
       try {
         var res = await fetch('/admin/analytics/thresholds/' + encodeURIComponent(key), {
           method: 'PATCH',
-          headers: { 'Authorization': 'Bearer ' + API_KEY, 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ value: value })
         });
         var data = await res.json();
@@ -694,7 +690,7 @@ export function renderPoolAnalyzerPage(apiKey: string): string {
       try {
         var res = await fetch('/admin/analytics/classifications/recompute', {
           method: 'POST',
-          headers: { 'Authorization': 'Bearer ' + API_KEY, 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json' }
         });
         var data = await res.json();
         if (data.ok) {

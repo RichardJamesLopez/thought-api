@@ -9,13 +9,7 @@
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
 import { adminNavCSS, adminNavScript, renderAdminNav } from './admin-nav.js';
 
-function escapeHtmlServer(s: string): string {
-  return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
-}
-
-export function renderLongformQueuePage(adminKey: string): string {
-  const safeKey = escapeHtmlServer(adminKey);
-  return `<!doctype html>
+export function renderLongformQueuePage(): string {  return `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -125,14 +119,12 @@ export function renderLongformQueuePage(adminKey: string): string {
   </main>
 
   <script>
-    const ADMIN_KEY = ${JSON.stringify(safeKey)};
-
     ${adminNavScript}
     ${themeScript}
 
     async function api(path, opts) {
       const res = await fetch(path, {
-        headers: { 'Authorization': 'Bearer ' + ADMIN_KEY, 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         ...opts,
       });
       if (!res.ok) {

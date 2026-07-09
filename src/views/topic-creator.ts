@@ -1,9 +1,7 @@
 import { adminNavCSS, adminNavScript, renderAdminNav } from './admin-nav.js';
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
 
-export function renderTopicCreator(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-
+export function renderTopicCreator(): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -218,8 +216,6 @@ export function renderTopicCreator(apiKey: string): string {
   <script>
     ${themeScript}
     ${adminNavScript}
-    var API_KEY = ${safeKey};
-
     async function submitTopic() {
       var btn = document.getElementById('submit-btn');
       var errEl = document.getElementById('alert-error');
@@ -246,7 +242,6 @@ export function renderTopicCreator(apiKey: string): string {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + API_KEY,
           },
           body: JSON.stringify({ name: name, description: description, insight_goal: insight_goal, example_seeds: example_seeds }),
         });
