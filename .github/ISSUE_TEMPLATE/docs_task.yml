@@ -1,0 +1,46 @@
+name: Documentation task
+description: Report missing, unclear, stale, or unsafe documentation.
+title: "[Docs]: "
+labels:
+  - documentation
+  - triage
+body:
+  - type: textarea
+    id: location
+    attributes:
+      label: Documentation location
+      description: Link or name the README, docs page, API reference, example, or inline comment.
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue
+    attributes:
+      label: What should change?
+      description: Explain what is confusing, missing, stale, or inconsistent.
+    validations:
+      required: true
+
+  - type: textarea
+    id: audience
+    attributes:
+      label: Audience
+      description: Who is affected: outside contributors, agent builders, API users, maintainers, or researchers?
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested_fix
+    attributes:
+      label: Suggested fix
+      description: Optional wording, examples, or references.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checks
+      options:
+        - label: I did not include private prompts, non-public data, API keys, or credentials.
+          required: true

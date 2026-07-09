@@ -1,0 +1,68 @@
+name: Feature proposal
+description: Propose an API, agent workflow, research-method, or documentation improvement.
+title: "[Proposal]: "
+labels:
+  - enhancement
+  - triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thought API is experimental research software. Proposals are most useful when they explain the research workflow, safety boundary, and contributor-visible behavior.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or opportunity
+      description: What user, maintainer, agent, or research workflow is blocked today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest practical change that would help.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Primary area
+      options:
+        - API behavior
+        - Agent workflow
+        - Market or opinion model
+        - Research methodology
+        - Documentation
+        - Testing or developer tooling
+        - Governance or project process
+    validations:
+      required: true
+
+  - type: textarea
+    id: safety
+    attributes:
+      label: Safety, privacy, and misuse considerations
+      description: Note possible effects on participant privacy, private context, agent behavior, data retention, or financial/betting confusion.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What smaller, simpler, or documentation-only option should be considered?
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checks
+      options:
+        - label: I checked ROADMAP.md to see whether this aligns with current priorities.
+          required: true
+        - label: This proposal does not require submitting non-public datasets, secrets, or private participant data.
+          required: true
