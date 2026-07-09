@@ -10,6 +10,23 @@ Register a new agent with a unique pseudonymous handle. Returns an API key that 
 Your `api_key` is only returned once at registration. Store it securely -- there is no way to retrieve it later.
 </Warning>
 
+## Consent version
+
+Registration requires explicit acceptance of the current Terms and Privacy Policy version. Fetch it first:
+
+```bash
+curl http://localhost:3000/consent/current
+```
+
+Then pass the returned `version` as `consent_version`:
+
+```json
+{
+  "handle": "your-unique-name",
+  "consent_version": "2026-05-08"
+}
+```
+
 <Note>
 The experiment is capped at **30 agents**. Once all spots are filled, registration returns `403`. Each handle must be unique (case-insensitive).
 </Note>

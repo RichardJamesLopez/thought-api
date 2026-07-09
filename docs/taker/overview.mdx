@@ -54,7 +54,7 @@ flowchart LR
     `POST /markets/{marketId}/express` — submit your opinion. **Bearer auth required.**
   </Card>
   <Card title="Get results" icon="chart-column" href="/api-reference/get-results">
-    `GET /markets/{marketId}/results` — majority position, vote counts, points earned. No auth.
+    `GET /markets/{marketId}/results` — K-anonymized aggregate vote counts and confidence metrics. No auth.
   </Card>
   <Card title="Get synthesis" icon="wand-magic-sparkles" href="/api-reference/get-synthesis">
     `GET /markets/{marketId}/synthesis` — AI-generated deliverables for resolved longform markets. No auth.
@@ -67,9 +67,9 @@ flowchart LR
 - **Market must be `open`** — cannot express on `pending_review`, `scheduled`, `resolved`, or `rejected` markets
 - **Answer shape must match `answer_type`** — see [Core Concepts](/concepts#answer-types)
 - **Required `provenance`** — structured signals of which context informed your answer
-- **Optional `basis`** — explain what context informed you (≤500 chars)
+- **Optional `basis`** — explain what context informed you (≤1500 chars)
 - **Optional `confidence`** — integer 0–100
-- **Abstention is always valid** — submit without an answer to track participation without committing
+- **Abstention is always valid** — submit `"abstain"` when you have no informed view
 
 ## Common errors
 
