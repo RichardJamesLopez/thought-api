@@ -136,9 +136,7 @@ export function renderLoginPage(error?: string): string {
 </html>`;
 }
 
-export function renderDashboard(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-
+export function renderDashboard(): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -570,11 +568,9 @@ export function renderDashboard(apiKey: string): string {
 
   </div>
 
-  <script>
-    const API_KEY = ${safeKey};
-    const REFRESH_INTERVAL = 60;
+  <script>    const REFRESH_INTERVAL = 60;
     let countdown = REFRESH_INTERVAL;
-    const headers = { 'Authorization': 'Bearer ' + API_KEY };
+    const headers = {}
 
     function toggleNav() {
       document.getElementById('nav-dropdown').classList.toggle('open');
@@ -1053,9 +1049,7 @@ export function renderDashboard(apiKey: string): string {
 </html>`;
 }
 
-export function renderMarketDetail(apiKey: string, marketId: string): string {
-  const safeKey = JSON.stringify(apiKey);
-  const safeId = JSON.stringify(marketId);
+export function renderMarketDetail(marketId: string): string {  const safeId = JSON.stringify(marketId);
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -1370,10 +1364,8 @@ export function renderMarketDetail(apiKey: string, marketId: string): string {
   </div>
 
   <script>
-    ${themeScript}
-    var API_KEY = ${safeKey};
-    var MARKET_ID = ${safeId};
-    var headers = { 'Authorization': 'Bearer ' + API_KEY };
+    ${themeScript}    var MARKET_ID = ${safeId};
+    var headers = {}
 
     function toggleNav() {
       document.getElementById('nav-dropdown').classList.toggle('open');
@@ -1712,9 +1704,7 @@ export function renderMarketDetail(apiKey: string, marketId: string): string {
 </html>`;
 }
 
-export function renderFunnelDetail(apiKey: string, funnelId: string): string {
-  const safeKey = JSON.stringify(apiKey);
-  const safeFunnelId = JSON.stringify(funnelId);
+export function renderFunnelDetail(funnelId: string): string {  const safeFunnelId = JSON.stringify(funnelId);
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -1979,10 +1969,8 @@ export function renderFunnelDetail(apiKey: string, funnelId: string): string {
   </div>
 
   <script>
-    ${themeScript}
-    var API_KEY = ${safeKey};
-    var FUNNEL_ID = ${safeFunnelId};
-    var headers = { 'Authorization': 'Bearer ' + API_KEY };
+    ${themeScript}    var FUNNEL_ID = ${safeFunnelId};
+    var headers = {}
 
     function toggleNav() {
       document.getElementById('nav-dropdown').classList.toggle('open');
@@ -2390,9 +2378,7 @@ export function renderFunnelDetail(apiKey: string, funnelId: string): string {
 </html>`;
 }
 
-export function renderSurfaceTopicsPage(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-
+export function renderSurfaceTopicsPage(): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2497,11 +2483,9 @@ export function renderSurfaceTopicsPage(apiKey: string): string {
     </div>
   </div>
 
-  <script>
-    var API_KEY = ${safeKey};
-    var REFRESH_INTERVAL = 60;
+  <script>    var REFRESH_INTERVAL = 60;
     var countdown = REFRESH_INTERVAL;
-    var headers = { 'Authorization': 'Bearer ' + API_KEY };
+    var headers = {}
 
     function toggleNav() {
       document.getElementById('nav-dropdown').classList.toggle('open');
@@ -2659,9 +2643,7 @@ const STUDIES_NAV_TOGGLE_SCRIPT = `
   }
 `;
 
-export function renderStudiesLandingPage(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-  return `<!DOCTYPE html>
+export function renderStudiesLandingPage(): string {  return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -2713,18 +2695,14 @@ export function renderStudiesLandingPage(apiKey: string): string {
     </div>
   </div>
 
-  <script>
-    var API_KEY = ${safeKey};
-    ${STUDIES_NAV_TOGGLE_SCRIPT}
+  <script>    ${STUDIES_NAV_TOGGLE_SCRIPT}
     ${themeScript}
   </script>
 </body>
 </html>`;
 }
 
-export function renderFunnelsOverviewPage(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-  return `<!DOCTYPE html>
+export function renderFunnelsOverviewPage(): string {  return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -2766,11 +2744,9 @@ export function renderFunnelsOverviewPage(apiKey: string): string {
     </div>
   </div>
 
-  <script>
-    var API_KEY = ${safeKey};
-    var REFRESH_INTERVAL = 60;
+  <script>    var REFRESH_INTERVAL = 60;
     var countdown = REFRESH_INTERVAL;
-    var headers = { 'Authorization': 'Bearer ' + API_KEY };
+    var headers = {}
     ${STUDIES_NAV_TOGGLE_SCRIPT}
 
     async function fetchData(endpoint) {
@@ -2830,9 +2806,7 @@ export function renderFunnelsOverviewPage(apiKey: string): string {
 </html>`;
 }
 
-export function renderFunnelsManagePage(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-  return `<!DOCTYPE html>
+export function renderFunnelsManagePage(): string {  return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -2874,9 +2848,7 @@ export function renderFunnelsManagePage(apiKey: string): string {
     </div>
   </div>
 
-  <script>
-    var API_KEY = ${safeKey};
-    var headers = { 'Authorization': 'Bearer ' + API_KEY };
+  <script>    var headers = {}
     ${STUDIES_NAV_TOGGLE_SCRIPT}
 
     async function fetchData(endpoint) {
@@ -2923,9 +2895,7 @@ export function renderFunnelsManagePage(apiKey: string): string {
 </html>`;
 }
 
-export function renderMarketsPage(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-
+export function renderMarketsPage(): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3052,16 +3022,14 @@ export function renderMarketsPage(apiKey: string): string {
     </div>
   </div>
 
-  <script>
-    var API_KEY = ${safeKey};
-    var REFRESH_INTERVAL = 60;
+  <script>    var REFRESH_INTERVAL = 60;
     var countdown = REFRESH_INTERVAL;
     var marketSort = 'created_at';
     var creatorFilter = '';
     var lastMarketsData = null;
     var marketsPage = 0;
     var PAGE_SIZE = 10;
-    var headers = { 'Authorization': 'Bearer ' + API_KEY };
+    var headers = {}
 
     function toggleNav() {
       document.getElementById('nav-dropdown').classList.toggle('open');

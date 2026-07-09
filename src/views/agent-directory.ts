@@ -1,9 +1,7 @@
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
 import { categoryDropdownCSS, renderCategoryDropdown, categoryDropdownScript, DOMAIN_OPTIONS, STYLE_OPTIONS, TYPE_OPTIONS } from './category-dropdown.js';
 
-export function renderDirectoryPage(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-
+export function renderDirectoryPage(): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -338,9 +336,7 @@ export function renderDirectoryPage(apiKey: string): string {
     <div id="pagination" class="pagination" style="display:none"></div>
   </div>
 
-  <script>
-    var API_KEY = ${safeKey};
-    var headers = { 'Authorization': 'Bearer ' + API_KEY };
+  <script>    var headers = {}
     var allAgents = [];
     var currentPage = 0;
     var CARD_PAGE_SIZE = 12;

@@ -1,9 +1,7 @@
 import { adminNavCSS, adminNavScript, renderAdminNav } from './admin-nav.js';
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
 
-export function renderMarketCreator(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-
+export function renderMarketCreator(): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -430,9 +428,7 @@ export function renderMarketCreator(apiKey: string): string {
 
   <script>
     ${themeScript}
-    ${adminNavScript}
-    const API_KEY = ${safeKey};
-    const tags = [];
+    ${adminNavScript}    const tags = [];
     const queryParams = new URLSearchParams(window.location.search);
     const PREFILL_DATE = queryParams.get('session_date');
     const PREFILL_SLOT = queryParams.get('session_slot');
@@ -512,7 +508,7 @@ export function renderMarketCreator(apiKey: string): string {
     async function loadDefaultFunding() {
       try {
         const res = await fetch('/admin/analytics/settings/default-market-funding', {
-          headers: { 'Authorization': 'Bearer ' + API_KEY },
+          headers: {},
         });
         if (!res.ok) return;
         const data = await res.json();
@@ -529,7 +525,7 @@ export function renderMarketCreator(apiKey: string): string {
     async function loadMaxFunding() {
       try {
         const res = await fetch('/admin/analytics/settings/max-admin-market-funding', {
-          headers: { 'Authorization': 'Bearer ' + API_KEY },
+          headers: {},
         });
         if (!res.ok) return;
         const data = await res.json();
@@ -563,7 +559,6 @@ export function renderMarketCreator(apiKey: string): string {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + API_KEY,
           },
           body: JSON.stringify({ value }),
         });
@@ -782,7 +777,6 @@ export function renderMarketCreator(apiKey: string): string {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + API_KEY,
           },
           body: JSON.stringify(body),
         });

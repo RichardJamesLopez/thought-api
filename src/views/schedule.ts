@@ -1,9 +1,7 @@
 import { adminNavCSS, adminNavScript, renderAdminNav } from './admin-nav.js';
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
 
-export function renderSchedulePage(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-
+export function renderSchedulePage(): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -201,9 +199,7 @@ export function renderSchedulePage(apiKey: string): string {
 
   <script>
     ${themeScript}
-    ${adminNavScript}
-    const API_KEY = ${safeKey};
-    let draggedId = null;
+    ${adminNavScript}    let draggedId = null;
     let draggedSessionId = null;
 
     function esc(s) {
@@ -221,7 +217,6 @@ export function renderSchedulePage(apiKey: string): string {
         ...options,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + API_KEY,
           ...(options.headers || {}),
         },
       });

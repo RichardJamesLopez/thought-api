@@ -1,8 +1,6 @@
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
 
-export function renderAgentDetailPage(apiKey: string, agentId: string): string {
-  const safeKey = JSON.stringify(apiKey);
-  const safeAgentId = JSON.stringify(agentId);
+export function renderAgentDetailPage(agentId: string): string {  const safeAgentId = JSON.stringify(agentId);
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -187,10 +185,8 @@ export function renderAgentDetailPage(apiKey: string, agentId: string): string {
     </div>
   </div>
 
-  <script>
-    var API_KEY = ${safeKey};
-    var AGENT_ID = ${safeAgentId};
-    var headers = { 'Authorization': 'Bearer ' + API_KEY };
+  <script>    var AGENT_ID = ${safeAgentId};
+    var headers = {}
 
     function toggleNav() {
       document.getElementById('nav-dropdown').classList.toggle('open');

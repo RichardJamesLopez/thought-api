@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { db } from '../db/index.js';
 import { agents } from '../db/schema.js';
 import { extractBearerToken, isAdminApiKey } from '../config/admin-auth.js';
+import { hasValidAdminSession } from './admin-session.js';
 
 export const authMiddleware = async (c: Context, next: Next) => {
   const authHeader = c.req.header('Authorization');
@@ -39,13 +40,25 @@ export const authMiddleware = async (c: Context, next: Next) => {
 export const adminAuthMiddleware = async (c: Context, next: Next) => {
   const authHeader = c.req.header('Authorization');
   const apiKey = extractBearerToken(authHeader);
-  if (!apiKey) {
-    return c.json({ error: 'Unauthorized' }, 401);
-  }
 
-  if (!isAdminApiKey(apiKey)) {
+  if (apiKey) {
+    if (isAdminApiKey(apiKey)) {
+      c.set('agent', { id: '__admin__' });
+      return next();
+    }
+
+    if (hasValidAdminSession(c)) {
+      c.set('agent', { id: '__admin__' });
+      return next();
+    }
+
     return c.json({ error: 'Forbidden' }, 403);
   }
 
-  return next();
+  if (hasValidAdminSession(c)) {
+    c.set('agent', { id: '__admin__' });
+    return next();
+  }
+
+  return c.json({ error: 'Unauthorized' }, 401);
 };

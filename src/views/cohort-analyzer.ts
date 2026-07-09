@@ -1,8 +1,6 @@
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
 
-export function renderCohortAnalyzerPage(apiKey: string): string {
-  const safeKey = JSON.stringify(apiKey);
-
+export function renderCohortAnalyzerPage(): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -600,8 +598,6 @@ export function renderCohortAnalyzerPage(apiKey: string): string {
 
   <script>
     ${themeScript}
-
-    var API_KEY = ${safeKey};
     var allAgents = [];
     var cohorts = { A: [], B: [] };
     var activeCohorts = ['A', 'B'];
@@ -629,7 +625,7 @@ export function renderCohortAnalyzerPage(apiKey: string): string {
     async function loadAgents() {
       try {
         var res = await fetch('/admin/analytics/classifications?limit=500', {
-          headers: { Authorization: 'Bearer ' + API_KEY }
+          headers: {}
         });
         var data = await res.json();
         allAgents = data.agents || [];
@@ -984,7 +980,7 @@ export function renderCohortAnalyzerPage(apiKey: string): string {
       try {
         var res = await fetch('/admin/cohort-analyzer/full-report', {
           method: 'POST',
-          headers: { Authorization: 'Bearer ' + API_KEY, 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             cohorts: cohortsPayload,
           })
@@ -1013,7 +1009,7 @@ export function renderCohortAnalyzerPage(apiKey: string): string {
       var emptyEl = document.getElementById('ql-empty');
       try {
         var res = await fetch('/admin/cohort-analyzer/batches', {
-          headers: { Authorization: 'Bearer ' + API_KEY }
+          headers: {}
         });
         var data = await res.json();
         if (!res.ok) throw new Error(data.error || 'failed');
@@ -1127,7 +1123,7 @@ export function renderCohortAnalyzerPage(apiKey: string): string {
       try {
         var res = await fetch('/admin/cohort-analyzer/resolve-batch', {
           method: 'POST',
-          headers: { Authorization: 'Bearer ' + API_KEY, 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ batch_tag: batchTag, cohort_labels: labels })
         });
         var data = await res.json();
@@ -1226,7 +1222,7 @@ export function renderCohortAnalyzerPage(apiKey: string): string {
       try {
         var res = await fetch('/admin/cohort-analyzer/export', {
           method: 'POST',
-          headers: { Authorization: 'Bearer ' + API_KEY, 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             cohorts: lastCohortsPayload,
             batch_tag: lastBatchTag || undefined,

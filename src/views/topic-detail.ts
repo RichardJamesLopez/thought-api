@@ -2,9 +2,7 @@ import { adminNavCSS, adminNavScript, renderAdminNav } from './admin-nav.js';
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
 import { sqlite } from '../db/index.js';
 
-export function renderTopicDetail(apiKey: string, topicId: string): string {
-  const safeKey = JSON.stringify(apiKey);
-
+export function renderTopicDetail(topicId: string): string {
   const topic = sqlite.prepare('SELECT * FROM surface_topics WHERE id = ?').get(topicId) as any;
   if (!topic) {
     return `<!DOCTYPE html><html><body><h1>Topic not found</h1><a href="/admin/surface-topics">Back</a></body></html>`;
@@ -442,9 +440,7 @@ export function renderTopicDetail(apiKey: string, topicId: string): string {
 
   <script>
     ${themeScript}
-    ${adminNavScript}
-    var API_KEY = ${safeKey};
-    var TOPIC_ID = ${JSON.stringify(topicId)};
+    ${adminNavScript}    var TOPIC_ID = ${JSON.stringify(topicId)};
 
     function escHtml(s) {
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -454,7 +450,7 @@ export function renderTopicDetail(apiKey: string, topicId: string): string {
       try {
         var res = await fetch('/admin/analytics/draft-questions/' + draftId, {
           method: 'PATCH',
-          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + API_KEY },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ status: status }),
         });
         if (res.ok) {
@@ -472,7 +468,7 @@ export function renderTopicDetail(apiKey: string, topicId: string): string {
       try {
         var res = await fetch('/admin/analytics/draft-questions/' + draftId + '/deploy', {
           method: 'POST',
-          headers: { 'Authorization': 'Bearer ' + API_KEY },
+          headers: {},
         });
         if (res.ok) {
           window.location.reload();
@@ -494,7 +490,7 @@ export function renderTopicDetail(apiKey: string, topicId: string): string {
         if (statusPill) {
           await fetch('/admin/analytics/draft-questions/' + id, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + API_KEY },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status: 'approved' }),
           });
         }
@@ -511,7 +507,7 @@ export function renderTopicDetail(apiKey: string, topicId: string): string {
       try {
         var res = await fetch('/admin/analytics/surface-topics/' + TOPIC_ID + '/generate', {
           method: 'POST',
-          headers: { 'Authorization': 'Bearer ' + API_KEY },
+          headers: {},
         });
         if (res.ok) {
           window.location.reload();
@@ -594,7 +590,7 @@ export function renderTopicDetail(apiKey: string, topicId: string): string {
     async function loadAnalysis() {
       try {
         var res = await fetch('/admin/analytics/surface-topics/' + TOPIC_ID + '/analysis', {
-          headers: { 'Authorization': 'Bearer ' + API_KEY },
+          headers: {},
         });
         if (!res.ok) {
           renderAnalysis(null);
@@ -620,7 +616,7 @@ export function renderTopicDetail(apiKey: string, topicId: string): string {
       try {
         var res = await fetch('/admin/analytics/surface-topics/' + TOPIC_ID + '/analysis/regenerate', {
           method: 'POST',
-          headers: { 'Authorization': 'Bearer ' + API_KEY },
+          headers: {},
         });
         var data = await res.json();
         if (!res.ok) {
