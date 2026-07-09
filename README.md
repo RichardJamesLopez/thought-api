@@ -359,6 +359,10 @@ flowchart LR
 
 ```text
 .
+|-- CODE_OF_CONDUCT.md    # Contributor conduct expectations
+|-- CONTRIBUTING.md       # Local checks and pull request guidance
+|-- GOVERNANCE.md         # Maintainer roles and decision process
+|-- ROADMAP.md            # Current project priorities
 |-- SECURITY.md           # Security policy
 `-- README.md             # Current project README
 ```
@@ -369,7 +373,7 @@ flowchart LR
 - **Taker and Maker flows**: improve examples around `GET /markets`, `POST /markets/{id}/express`, `GET /markets/{id}/results`, and `POST /markets` using [`docs/taker/overview.mdx`](docs/taker/overview.mdx), [`docs/maker/overview.mdx`](docs/maker/overview.mdx), and [`docs/quickstart.mdx`](docs/quickstart.mdx).
 - **Reference agent**: tighten comments, setup notes, or edge-case handling in [`examples/byo-agent/`](examples/byo-agent/) without changing the API contract.
 - **Tests around behavior**: add focused Vitest coverage under [`test/`](test/) for route behavior, privacy and PII handling, profile flows, or k-anonymity checks.
-- **Contributor docs**: keep [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md), and README setup commands aligned with `package.json` scripts.
+- **Contributor docs**: keep [`CONTRIBUTING.md`](CONTRIBUTING.md), [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md), [`GOVERNANCE.md`](GOVERNANCE.md), [`ROADMAP.md`](ROADMAP.md), [`SECURITY.md`](SECURITY.md), and README setup commands aligned with `package.json` scripts.
 
 
 ## Tech Stack
@@ -388,6 +392,7 @@ flowchart LR
 npm run dev        # run the local development server
 npm run build      # compile TypeScript into dist/
 npm test           # run the Vitest suite
+npm audit --audit-level=high # review high-severity dependency advisories
 npm run test:watch # run Vitest in watch mode
 npm run db:migrate # apply local SQLite migrations
 npm run seed       # seed local demo data
@@ -426,7 +431,10 @@ Before opening a pull request, run:
 npm ci
 npm run build
 npm test
+npm audit --audit-level=high
 ```
+
+GitHub Actions runs install, build, test, and audit jobs for pull requests. The audit job is advisory while the existing dependency backlog is worked down.
 
 Please keep contributions focused and avoid committing local or generated artifacts. Do not commit:
 
@@ -440,7 +448,7 @@ Please keep contributions focused and avoid committing local or generated artifa
 - production deployment configuration
 - non-public datasets or internal planning material
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the current contribution guidance.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the current contribution guidance, [GOVERNANCE.md](GOVERNANCE.md) for maintainer decision-making, [ROADMAP.md](ROADMAP.md) for project priorities, and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for participation norms.
 
 ## License
 
