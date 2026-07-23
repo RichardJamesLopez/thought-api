@@ -1,5 +1,4 @@
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
-import { brandTitle, PRODUCT_NAME } from '../branding.js';
 
 export function renderAgentDetailPage(agentId: string): string {  const safeAgentId = JSON.stringify(agentId);
 
@@ -8,7 +7,7 @@ export function renderAgentDetailPage(agentId: string): string {  const safeAgen
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Agent Profile")}</title>
+  <title>Thought — Agent Profile</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -96,7 +95,7 @@ export function renderAgentDetailPage(agentId: string): string {  const safeAgen
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
       <span class="topbar-divider"></span>
       <span class="topbar-subtitle" id="page-subtitle">Agent Profile</span>
     </div>

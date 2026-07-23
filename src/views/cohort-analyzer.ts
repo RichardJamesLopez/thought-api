@@ -1,5 +1,4 @@
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
-import { brandTitle, PRODUCT_NAME } from '../branding.js';
 
 export function renderCohortAnalyzerPage(): string {
   return `<!DOCTYPE html>
@@ -7,7 +6,7 @@ export function renderCohortAnalyzerPage(): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Cohort Analyzer")}</title>
+  <title>Thought — Cohort Analyzer</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -364,7 +363,7 @@ export function renderCohortAnalyzerPage(): string {
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <span class="topbar-wordmark">${PRODUCT_NAME}</span>
+      <span class="topbar-wordmark">Thought</span>
       <span class="topbar-divider"></span>
       <span class="topbar-subtitle">Cohort Analyzer</span>
     </div>

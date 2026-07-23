@@ -1,6 +1,5 @@
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
 import { categoryDropdownCSS, renderCategoryDropdown, categoryDropdownScript, DOMAIN_OPTIONS, STYLE_OPTIONS, TYPE_OPTIONS } from './category-dropdown.js';
-import { brandTitle, PRODUCT_NAME } from '../branding.js';
 
 export function renderDirectoryPage(): string {
   return `<!DOCTYPE html>
@@ -8,7 +7,7 @@ export function renderDirectoryPage(): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Agents")}</title>
+  <title>Thought — Agents</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
   <style>
@@ -175,7 +174,7 @@ export function renderDirectoryPage(): string {
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
       <span class="topbar-divider"></span>
       <span class="topbar-subtitle">Agents</span>
     </div>

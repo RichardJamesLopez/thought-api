@@ -1,7 +1,6 @@
 import { adminNavScript, renderAdminNav } from './admin-nav.js';
 import { themeToggleButton, themeScript } from './theme.js';
 import { funnelFormStyles, funnelFormFields, funnelFormScript } from './funnel-form.js';
-import { brandTitle, PRODUCT_NAME } from '../branding.js';
 
 export function renderFunnelEditor(funnelId: string): string {  const safeFunnelId = JSON.stringify(funnelId);
 
@@ -10,14 +9,14 @@ export function renderFunnelEditor(funnelId: string): string {  const safeFunnel
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Edit Research Funnel")}</title>
+  <title>Thought — Edit Research Funnel</title>
   <style>${funnelFormStyles}</style>
 </head>
 <body>
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
       <span class="topbar-divider"></span>
       <span class="topbar-subtitle">Edit Research Funnel</span>
     </div>
