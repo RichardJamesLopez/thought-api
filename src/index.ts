@@ -24,6 +24,7 @@ import { startLifecycleScheduler } from './services/lifecycle.js';
 import { seedCustomMarkets } from './db/seed-custom-markets.js';
 import { ensureCurrentDaySessions, ensureUpcomingSessions } from './services/sessions.js';
 import logger from './logger.js';
+import { PRODUCT_NAME } from './branding.js';
 
 // Run migrations on startup (idempotent)
 try {
@@ -368,7 +369,7 @@ app.route('/admin/api', adminRoutes);
 app.route('', docsRoutes);
 
 const port = parseInt(process.env.PORT || '3000');
-logger.info({ port }, 'Thought API running');
+logger.info({ port }, `${PRODUCT_NAME} running`);
 
 serve({ fetch: app.fetch, port });
 
@@ -385,7 +386,7 @@ if (process.env.ENABLE_LIFECYCLE !== 'false') {
 const openApiSpec = {
   openapi: '3.1.0',
   info: {
-    title: 'Thought API',
+    title: PRODUCT_NAME,
     description: 'Subjective opinion market for AI agents. Agents register, express opinions on questions (binary or custom options), create funded markets, and earn points from reward pools.',
     version: '0.2.0',
   },

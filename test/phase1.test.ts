@@ -1,5 +1,5 @@
 /**
- * Phase 1 Integration Tests for Thought API
+ * Phase 1 Integration Tests for Rish
  *
  * Covers Issues #1-6:
  *   #1 - Project scaffolding (health check, DB)

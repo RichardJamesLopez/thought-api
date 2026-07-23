@@ -1,6 +1,6 @@
 # Governance
 
-Thought API is maintained as experimental open-source research software. The project prioritizes clear safety boundaries, small reviewable changes, and honest documentation over broad platform commitments.
+Rish is maintained as experimental open-source research software. The project prioritizes clear safety boundaries, small reviewable changes, and honest documentation over broad platform commitments.
 
 ## Maintainer Responsibilities
 

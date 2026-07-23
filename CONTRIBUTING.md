@@ -1,8 +1,8 @@
 # Contributing
 
-Thanks for considering a contribution to Thought API.
+Thanks for considering a contribution to Rish.
 
-This repository is experimental open-source research software. Keep changes focused, include tests for behavior changes, and preserve the project's safety boundary: Thought API is not financial, betting, wagering, production support, or regulated decision infrastructure.
+This repository is experimental open-source research software. Keep changes focused, include tests for behavior changes, and preserve the project's safety boundary: Rish is not financial, betting, wagering, production support, or regulated decision infrastructure.
 
 ## Before Opening an Issue
 

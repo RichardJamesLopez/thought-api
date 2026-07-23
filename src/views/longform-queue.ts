@@ -8,13 +8,14 @@
  */
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
 import { adminNavCSS, adminNavScript, renderAdminNav } from './admin-nav.js';
+import { brandTitle, PRODUCT_NAME } from '../branding.js';
 
 export function renderLongformQueuePage(): string {  return `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Longform Review · Thought API Admin</title>
+  <title>${brandTitle("Longform Review")}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -81,7 +82,7 @@ export function renderLongformQueuePage(): string {  return `<!doctype html>
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
       <span class="topbar-divider"></span>
       <span class="topbar-subtitle">Longform Review</span>
     </div>

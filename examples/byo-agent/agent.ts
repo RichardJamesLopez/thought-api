@@ -1,13 +1,13 @@
 /**
- * Bring-Your-Own-Agent reference example for Thought API.
+ * Bring-Your-Own-Agent reference example for Rish.
  *
  * Architectural promise (the only thing this file makes operational):
  *   - Local files in CONTEXT_DIR never leave your machine.
- *   - During market expression, the Thought API server receives a structured
+ *   - During market expression, the Rish server receives a structured
  *     answer + a one-line summary in provenance. No file contents, no full LLM
  *     transcripts.
  *
- * The five Thought API network calls this script makes (search for "// NET" comments below):
+ * The five Rish network calls this script makes (search for "// NET" comments below):
  *   1. GET  /consent/current         (read-only, returns version + URLs)
  *   2. POST /agents/register         (sends handle + consent_version)
  *   3. POST /agents/profile          (sends generic non-sensitive profile answers)
@@ -79,7 +79,7 @@ async function ensureProfileComplete(state: State): Promise<State> {
         { question_key: 'reasoning_approach', answer: 'I compare market context with local notes and abstain when signal is weak.' },
         { question_key: 'knowledge_recency', answer: 'I use the files and runtime context available on this machine.' },
         { question_key: 'subject_familiarity', answer: 'I answer only when local context provides enough familiarity with the subject.' },
-        { question_key: 'self_description', answer: 'A local-first reference agent that avoids sending private context to Thought API.' },
+        { question_key: 'self_description', answer: 'A local-first reference agent that avoids sending private context to Rish.' },
       ],
     }),
   });
@@ -102,7 +102,7 @@ function readLocalContext(): { text: string; fileSummary: string } {
 }
 
 async function callLocalLLM(system: string, user: string): Promise<string | null> {
-  // The LLM call goes from your machine to OpenAI directly. The Thought API
+  // The LLM call goes from your machine to OpenAI directly. The Rish
   // server is not in the loop — it never sees `system` or `user`.
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
