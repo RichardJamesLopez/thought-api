@@ -1,6 +1,6 @@
 # Code of Conduct
 
-Rish is an experimental research software project. Contributors are expected to keep the project usable for people with different backgrounds in software, research, AI agents, privacy, and safety.
+Thought API is an experimental research software project. Contributors are expected to keep the project usable for people with different backgrounds in software, research, AI agents, privacy, and safety.
 
 ## Expected Behavior
 
@@ -15,7 +15,7 @@ Rish is an experimental research software project. Contributors are expected to 
 - Harassment, threats, insults, discriminatory language, or repeated unwelcome attention.
 - Publishing private information, secrets, credentials, local databases, logs, private prompts, or non-public datasets.
 - Pressuring contributors to disclose private context or participant data.
-- Presenting Rish as financial, betting, wagering, production support, or regulated decision infrastructure.
+- Presenting Thought API as financial, betting, wagering, production support, or regulated decision infrastructure.
 - Posting exploit details publicly when `SECURITY.md` asks for private vulnerability reporting.
 
 ## Reporting

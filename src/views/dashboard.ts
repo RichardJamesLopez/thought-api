@@ -1,5 +1,4 @@
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
-import { brandTitle, PRODUCT_NAME } from '../branding.js';
 
 export function renderLoginPage(error?: string): string {
   return `<!DOCTYPE html>
@@ -7,7 +6,7 @@ export function renderLoginPage(error?: string): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Admin")}</title>
+  <title>Thought Admin</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -108,7 +107,7 @@ export function renderLoginPage(error?: string): string {
     <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
   </button>
   <div class="login-wrap">
-    <div class="login-logo">${PRODUCT_NAME}</div>
+    <div class="login-logo">Thought Platform</div>
     <div class="login-card">
       <h1>Admin Dashboard</h1>
       <p>Sign in with your admin API key to continue.</p>
@@ -143,7 +142,7 @@ export function renderDashboard(): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Admin")}</title>
+  <title>Thought — Admin</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
   <style>
@@ -446,7 +445,7 @@ export function renderDashboard(): string {
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
       <span class="topbar-divider"></span>
       <span class="topbar-subtitle">Admin Dashboard</span>
     </div>
@@ -1057,7 +1056,7 @@ export function renderMarketDetail(marketId: string): string {  const safeId = J
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Market Detail")}</title>
+  <title>Thought — Market Detail</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -1337,7 +1336,7 @@ export function renderMarketDetail(marketId: string): string {  const safeId = J
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
       <span class="topbar-divider"></span>
       <span class="topbar-subtitle">Market Detail</span>
     </div>
@@ -1712,7 +1711,7 @@ export function renderFunnelDetail(funnelId: string): string {  const safeFunnel
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Funnel Detail")}</title>
+  <title>Thought — Funnel Detail</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -1942,7 +1941,7 @@ export function renderFunnelDetail(funnelId: string): string {  const safeFunnel
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
       <span class="topbar-divider"></span>
       <span class="topbar-subtitle">Funnel Detail</span>
     </div>
@@ -2385,7 +2384,7 @@ export function renderSurfaceTopicsPage(): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Surface-Topics")}</title>
+  <title>Thought — Surface-Topics</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -2448,7 +2447,7 @@ export function renderSurfaceTopicsPage(): string {
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
       <span class="topbar-divider"></span>
       <span class="topbar-subtitle">Surface-Topics</span>
     </div>
@@ -2649,7 +2648,7 @@ export function renderStudiesLandingPage(): string {  return `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Studies")}</title>
+  <title>Thought — Studies</title>
   <style>
     ${STUDIES_BASE_STYLES}
     .chooser-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 8px; }
@@ -2668,7 +2667,7 @@ export function renderStudiesLandingPage(): string {  return `<!DOCTYPE html>
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
       <span class="topbar-divider"></span>
       <span class="topbar-subtitle">Studies</span>
     </div>
@@ -2708,7 +2707,7 @@ export function renderFunnelsOverviewPage(): string {  return `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Research Funnels")}</title>
+  <title>Thought — Research Funnels</title>
   <style>
     ${STUDIES_BASE_STYLES}
     .back-link { font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 600; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; transition: background .15s; }
@@ -2720,7 +2719,7 @@ export function renderFunnelsOverviewPage(): string {  return `<!DOCTYPE html>
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
       <span class="topbar-divider"></span>
       <a class="back-link" href="/admin/studies">&larr; Studies</a>
       <span class="topbar-subtitle">Research Funnels</span>
@@ -2812,7 +2811,7 @@ export function renderFunnelsManagePage(): string {  return `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Manage Funnels")}</title>
+  <title>Thought — Manage Funnels</title>
   <style>
     ${STUDIES_BASE_STYLES}
     .back-link { font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 600; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; transition: background .15s; }
@@ -2826,7 +2825,7 @@ export function renderFunnelsManagePage(): string {  return `<!DOCTYPE html>
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
       <span class="topbar-divider"></span>
       <a class="back-link" href="/admin/funnels">&larr; Research Funnels</a>
       <span class="topbar-subtitle">Manage</span>
@@ -2902,7 +2901,7 @@ export function renderMarketsPage(): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle("Markets")}</title>
+  <title>Thought — Markets</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -2979,7 +2978,7 @@ export function renderMarketsPage(): string {
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
       <span class="topbar-divider"></span>
       <span class="topbar-subtitle">Markets</span>
     </div>

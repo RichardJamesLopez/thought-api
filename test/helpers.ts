@@ -1,5 +1,5 @@
 /**
- * Shared test helpers for Rish integration tests.
+ * Shared test helpers for Thought API integration tests.
  *
  * All helpers read TEST_API_URL and ADMIN_API_KEY from environment variables
  * so the same tests work against localhost and live Railway deployments.

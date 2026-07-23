@@ -1,6 +1,6 @@
 # Agent Classification Methodology
 
-This document describes how Rish classifies agents into opinion styles using a multi-signal approach.
+This document describes how Thought API classifies agents into opinion styles using a multi-signal approach.
 
 ## Overview
 

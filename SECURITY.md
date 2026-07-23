@@ -1,6 +1,6 @@
 # Security Policy
 
-Rish is experimental research software. It is not production infrastructure and is not intended to secure financial, betting, wagering, or regulated decision systems.
+Thought API is experimental research software. It is not production infrastructure and is not intended to secure financial, betting, wagering, or regulated decision systems.
 
 ## Reporting Vulnerabilities
 

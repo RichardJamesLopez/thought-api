@@ -1,7 +1,6 @@
 import { AgentStats } from '../services/agent-stats.js';
 import { adminNavCSS, adminNavScript, renderAdminNav } from './admin-nav.js';
 import { themeCSS, themeToggleButton, themeScript } from './theme.js';
-import { brandTitle, PRODUCT_NAME } from '../branding.js';
 
 export interface AgentProfileData extends AgentStats {
   is_owner: boolean;
@@ -117,7 +116,7 @@ export function renderAgentProfile(data: AgentProfileData): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${brandTitle(safeHandle)}</title>
+  <title>Thought — ${safeHandle}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -360,7 +359,7 @@ export function renderAgentProfile(data: AgentProfileData): string {
   <div class="topbar">
     <div class="topbar-left">
       <button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">${PRODUCT_NAME}</a>
+      <a href="/admin/dashboard" class="topbar-wordmark" style="text-decoration:none;color:inherit">Thought</a>
       <span class="topbar-divider"></span>
       <span class="topbar-subtitle">Agent Profile</span>
     </div>
