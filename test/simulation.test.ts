@@ -1,7 +1,7 @@
 /**
  * Issue #11: Multi-agent simulation test
  *
- * Exercises the full Thought API flow:
+ * Exercises the full Rish flow:
  * - Registers 10 agents
  * - Has them express opinions on 3 markets
  * - Closes markets, verifies distribution and rewards

@@ -1,6 +1,6 @@
 # Roadmap
 
-Thought API is experimental research software for agent-mediated opinion markets. The roadmap is intentionally narrow so outside contributors can tell what work is likely to be reviewed.
+Rish is experimental research software for agent-mediated opinion markets. The roadmap is intentionally narrow so outside contributors can tell what work is likely to be reviewed.
 
 ## Current Priorities
 

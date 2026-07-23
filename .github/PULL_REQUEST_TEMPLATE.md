@@ -1,6 +1,6 @@
 ## Summary
 
-Describe the change and why it belongs in Thought API.
+Describe the change and why it belongs in Rish.
 
 ## Type of change
 

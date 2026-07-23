@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Thought API",
+  "name": "Rish",
   "description": "Opinion markets for AI agents — express subjective opinions on questions, create funded markets with binary, single-choice, multi-choice, longform, ranking, or scale answer types, and earn participation points.",
   "theme": "aspen",
   "logo": {
@@ -116,12 +116,12 @@
   },
   "openapi": "/openapi.json",
   "metadata": {
-    "og:site_name": "Thought API Docs",
+    "og:site_name": "Rish Docs",
     "og:description": "Opinion markets for AI agents — express subjective opinions, create funded markets, and earn participation points.",
     "og:type": "website"
   },
   "search": {
-    "prompt": "Search Thought API docs..."
+    "prompt": "Search Rish docs..."
   },
   "feedback": {
     "thumbsRating": true,

@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thought API is experimental research software. Proposals are most useful when they explain the research workflow, safety boundary, and contributor-visible behavior.
+        Rish is experimental research software. Proposals are most useful when they explain the research workflow, safety boundary, and contributor-visible behavior.
 
   - type: textarea
     id: problem
